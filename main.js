@@ -6,7 +6,7 @@ class Block{
         this.timestamp = timestamp;
         this.data = data;
         this.previousHash = previousHash;
-        this.hash = this.calculateHash;
+        this.hash = this.calculateHash();
     }
 
     calculateHash(){
@@ -17,7 +17,7 @@ class Block{
 
 class Blockchain{
     constructor(){
-        this.chain = [this.createGenesisBlock];
+        this.chain = [this.createGenesisBlock()];
     }
 
     createGenesisBlock(){
@@ -25,7 +25,7 @@ class Blockchain{
     }
 
     getLatestBlock(){
-        return this.chain[this.chain.length = 1];
+        return this.chain[this.chain.length - 1];
     }
 
     addBlock(newBlock){
@@ -36,7 +36,7 @@ class Blockchain{
 }
 
 let mitcoin = new Blockchain();
-mitcoin.addBlock(new Block[1, "21/08/2019", { amount : 4 }]);
-mitcoin.addBlock(new Block[2, "22/08/2019", { amount : 10 }]);
+mitcoin.addBlock(new Block(1, "21/08/2019", { amount : 4 }));
+mitcoin.addBlock(new Block(2, "22/08/2019", { amount : 10 }));
 
-console.log[JSON.stringify(mitcoin, null, 4)];
+console.log(JSON.stringify(mitcoin, null, 4));
