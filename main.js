@@ -11,7 +11,7 @@ class Block{
     }
 
     calculateHash(){
-        return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString();
+        return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data) + this.nonce).toString();
     }
 
     mineBlock(difficulty){
@@ -27,6 +27,7 @@ class Block{
 class Blockchain{
     constructor(){
         this.chain = [this.createGenesisBlock()];
+        this.difficulty = 2;
     }
 
     createGenesisBlock(){
@@ -39,7 +40,8 @@ class Blockchain{
 
     addBlock(newBlock){
         newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.hash = newBlock.calculateHash();
+        newBlock.mineBlock(this.difficulty);
+       // newBlock.hash = newBlock.calculateHash();
         this.chain.push(newBlock);
     }
 
@@ -62,11 +64,15 @@ class Blockchain{
 }
 
 let mitcoin = new Blockchain();
+
+console.log("Mining block 1---")
 mitcoin.addBlock(new Block(1, "21/08/2019", { amount : 4 }));
+
+console.log("Mining block 2---")
 mitcoin.addBlock(new Block(2, "22/08/2019", { amount : 10 }));
 
 
-console.log(' Is blockchain valid? ' + mitcoin.isChainValid());
+console.log('Is blockchain valid? ' + mitcoin.isChainValid());
 
 //to test the chain breakage, try this code ----
 //mitcoin.chain[1].data = { amount: 100 };
